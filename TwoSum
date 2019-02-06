@@ -1,0 +1,82 @@
+import java.util.*;
+public class TwoSum {
+ 
+    
+    public static int[] findTwoSum(int[] list, int sum) {
+        //throw new UnsupportedOperationException("Waiting to be implemented.");       
+        HashMap <Integer, ArrayList<Integer> > hMap= new HashMap<>();;
+        
+        int[] results = new int[2];
+        int sumOfTwoElements = 0;
+        if(list.length < 2 ){
+            return null;
+        }
+                       
+        
+        for (int i= 0; i < list.length; i++) {
+            //creating a hashmap that contains all the unique values inside the int array
+            //key is the numerical digit of the element inside the int array
+            // value of hashmap is the position of the element inside the int array
+            // value of hashmap is contained inside ArrayList as there may be duplicate elements in int array
+            int elementInPositionI = list[i];
+            Integer elementInPositionInteger = new Integer(elementInPositionI);
+            
+            if(!hMap.containsKey(elementInPositionInteger)){
+                ArrayList<Integer> valueOfHashMap = new ArrayList<>();
+                Integer positionI = new Integer(i);
+                valueOfHashMap.add(positionI);
+                hMap.put(elementInPositionInteger,valueOfHashMap);
+                
+                
+            }
+            else if (hMap.containsKey(elementInPositionInteger)){
+                //duplicate records
+                ArrayList<Integer> aList = hMap.get(elementInPositionInteger);
+                Integer positionI = new Integer(i);
+                aList.add(positionI);
+            }
+            
+            
+        }
+        for (int i= 0; i < list.length; i++) {
+            int elementInPositionI = list[i];
+            int differenceBetweenSumAndElementInPositionI = Math.abs(elementInPositionI - sum);
+            if(hMap.containsKey(differenceBetweenSumAndElementInPositionI) && 
+            differenceBetweenSumAndElementInPositionI !=elementInPositionI){
+                // for non duplicate records
+                ArrayList<Integer> toBeReturnList= hMap.get(differenceBetweenSumAndElementInPositionI);
+                Integer toBeReturn = toBeReturnList.get(0);
+                results[0] = i;
+                results[1] = toBeReturn;
+                return results;
+            }
+            else if (hMap.containsKey(differenceBetweenSumAndElementInPositionI) && 
+            differenceBetweenSumAndElementInPositionI ==elementInPositionI){
+                // for element whose sum of twice of itself = sum
+                ArrayList<Integer> toBeReturnList= hMap.get(differenceBetweenSumAndElementInPositionI);
+                //need to check that there are two occurences of this element numerical value in int array
+                if(toBeReturnList.size()>=2){
+                    Integer toBeReturn = toBeReturnList.get(1);
+                    results[0] = i;
+                    results[1] = toBeReturn;
+                    return results;
+                    
+                }
+                
+            }
+            
+        }
+        
+        
+        return null;
+        
+    }
+
+    public static void main(String[] args) {
+        System.out.println("main");
+        int[] indices = findTwoSum(new int[] { 3, 1, 5, 7, 5, 9 }, 10);
+        if(indices != null) {
+            System.out.println(indices[0] + " " + indices[1]);
+        }
+    }
+}
