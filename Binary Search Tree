@@ -1,0 +1,75 @@
+class Node {
+    public int value;
+    public Node left, right;
+
+    public Node(int value, Node left, Node right) {
+        this.value = value;
+        this.left = left;
+        this.right = right;
+    }
+}
+
+public class BinarySearchTree {
+    
+    public static boolean contains(Node root, int value) {
+        Node left = root.left;
+        //int leftNodeValue = left.value;
+        boolean results = false;
+        
+        Node right = root.right;
+        //int rightNodeValue = right.value;
+        
+        int currentRootValue = root.value;
+        
+        if(value == currentRootValue){
+            System.out.println("value equal to root");
+            results = true;
+             return results;
+        } 
+        
+      
+        
+        else if (value < currentRootValue ){
+          System.out.println("value < currentRootValue");
+          if(left != null){
+              
+              results = contains(left, value); 
+              return results;
+          }
+          return false;                     
+           
+        }
+            
+        
+        else if (value > currentRootValue ){
+            System.out.println("value larger than root");
+           if(right != null){
+               System.out.println("hello");
+              results = contains(right,value); 
+              return results;
+               
+           }
+            System.out.println("value larger than root but right node is null");
+            
+            return false;
+           
+        }
+        
+        else{
+            System.out.println("else block");
+          return false;  
+        }
+        
+        
+    }
+    
+    public static void main(String[] args) {
+        Node n1 = new Node(1, null, null);
+        Node n3 = new Node(3, null, null);
+        Node n2 = new Node(2, n1, n3);
+        
+        System.out.println(contains(n2, 3));
+    }
+    
+    
+}
